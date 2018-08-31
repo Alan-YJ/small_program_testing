@@ -13,9 +13,9 @@ const test = require('./cloud-functions/test/').main
 app.use(main)
 
 router.get('/api/test',function(ctx,next){
-    test(ctx.request.query).then(
-        res.json.bind(res)
-    ).catch((e)=>{
+    test(ctx.request.query).then((res)=>{
+        ctx.body = res
+    }).catch((e)=>{
         console.error(e)
         next(e)
     })

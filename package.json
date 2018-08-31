@@ -4,11 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./server/index.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "book/*",
+      "client/*",
+      "bin/*",
+      "node_modules",
+      "dist/*",
+      "package.json"
+    ],
+    "delay": "1000"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bluebird": "^3.5.1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
@@ -28,6 +42,7 @@
     "gulp-tinypng-nokey": "^1.1.0",
     "gulp-uglify": "^3.0.1",
     "koa": "^2.5.2",
+    "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "minimist": "^1.2.0",
     "postcss-font-base64": "^1.0.5",
