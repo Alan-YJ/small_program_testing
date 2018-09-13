@@ -1,18 +1,40 @@
-const src = './src'
-const dist = './dist'
-
+const gulp = require('gulp')
 const rename = require('gulp-rename')
+const del = require('del')
+
+const through = require('through2')
+const colors = require('ansi-colors')
+const log = require('fancy-log')
+const argv = require('minimist')(process.argv.slice(2))
+
 const postcss = require('gulp-postcss')
 const pxtorpx = require('postcss-px2rpx')
 const base64 = require('postcss-font-base64')
+
+const htmlmin = require('gulp-htmlmin')
+const sass = require('gulp-sass')
+const jsonminify = require('gulp-jsonminify')
 const combiner = require('stream-combiner2')
-const sourcemaps = require('gulp-sourcemaps')
-const jdists = require('gulp-jdists')
-const through = reuqire('through2')
 const babel = require('gulp-babel')
 const uglify = require('gulp-uglify')
-const argv = require('minimist')(process.argv.slice(2))
+const cssnano = require('gulp-cssnano')
+const runSequence = require('run-sequence')
+const sourcemaps = require('gulp-sourcemaps')
+const filter = require('gulp-filter')
+const jdists = require('gulp-jdists')
+
+const src = './client'
+const dist = './dist'
 const isProd = argv.type === 'prod'
+
+const handleError = (err) => {
+    console.log('\n')
+    log(colors.red('Error!'))
+    log('fileName: ' + colors.red(err.fileName))
+    log('lineNumber: ' + colors.red(err.lineNumber))
+    log('message: ' + err.message)
+    log('plugin: ' + colors.yellow(err.plugin))
+  }
 
 gulp.task('wxml',()=>{
     return gulp.src(`${src}/**/*.wxml`).pipe(gulp.dest(dist))
@@ -29,17 +51,18 @@ gulp.task('wxss',()=>{
     combined.on('error',handleError)
 })
 
-gulp.task('js',()=>{
+gulp.task('js', () => {
+    const f = filter((file) => !/(mock)/.test(file.path))
     gulp
-        .src(`${src}/**/*.js`)
-        .pipe(isProd ? jdists({trigger:'prod'}) : jdists({trigger:'dev'}))
-        .pipe(isProd ? through.obj() : sourcemaps.init())
-        .pipe(babel({presets:['env']}))
-        .pipe(isProd ? uglify({compress:true}) : through.obj())
-        .pipe(isProd ? through.obj() : sourcemaps.write('./'))
-        .pipe(gulp.dest(dist))
-        .pipe(isPord ? jdists({trigger:'prod'}) : jdists({trigger:'dev'}))
-})
+      .src(`${src}/**/*.js`)
+      .pipe(isProd ? f : through.obj())
+      .pipe(isProd ? jdists({trigger: 'prod'}) : jdists({ trigger: 'dev'}))
+      .pipe(isProd ? through.obj() : sourcemaps.init())
+    //   .pipe(babel({"presets": ['env']}))
+      .pipe(isProd ? uglify({compress: true}): through.obj())
+      .pipe(isProd ? through.obj() : sourcemaps.write('./'))
+      .pipe(gulp.dest(dist)).on('error',handleError)
+  })
 
 gulp.task('json',()=>{
     return gulp.src(`${src}/**/*.json`).pipe(gulp.dest(dist))
@@ -63,6 +86,31 @@ gulp.task('watch',()=>{
 
 gulp.task('clean',()=>{
     return del(['./dist/**'])
+})
+
+// cloud-functions 处理方法
+const cloudPath = './server/cloud-functions'
+gulp.task('cloud', () => {
+  return gulp
+    .src(`${cloudPath}/**`)
+    .pipe(
+      isProd
+        ? jdists({
+            trigger: 'prod'
+          })
+        : jdists({
+            trigger: 'dev'
+          })
+    )
+    .pipe(gulp.dest(`${dist}/cloud-functions`))
+})
+
+gulp.task('watch:cloud', () => {
+  gulp.watch(`${cloudPath}/**`, ['cloud'])
+})
+
+gulp.task('cloud:dev', () => {
+  runSequence('cloud', 'watch:cloud')
 })
 
 gulp.task('dev',['clean'],()=>{

@@ -11,13 +11,14 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.4",
-	"appid": "wx4b50b3907e43a7c1",
-	"projectname": "wxchat",
-	"svr": "/",
-	"client": "/",
+	"libVersion": "2.2.5",
+	"appid": "wx2f7e519b7d02de79",
+	"projectname": "天气",
+	"svr": "server/",
+	"client": "dist/",
 	"qcloudRoot": "/",
-	"miniprogramRoot": "/",
+	"miniprogramRoot": "dist/",
+	"cloudfunctionRoot": "server/cloud-functions/",
 	"pluginRoot": "/",
 	"scripts": {},
 	"condition": {
@@ -37,8 +38,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide"
+				}
+			]
 		}
 	}
 }

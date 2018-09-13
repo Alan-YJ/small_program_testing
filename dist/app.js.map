@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["app.js"],"sourcesContent":["App({\n    onLaunch: function () {\n        console.log('App Launch')\n    },\n    onShow: function () {\n        console.log('App Show')\n    },\n    onHide: function () {\n        console.log('App Hide')\n    },\n    globalData: {\n        hasLogin: false\n    }\n});"],"file":"app.js"}

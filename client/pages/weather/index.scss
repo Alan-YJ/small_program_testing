@@ -1,0 +1,54 @@
+$grid-margin:20rpx;
+.container{
+    margin-bottom:$grid-margin;
+    max-width:750rpx;
+    box-sizing:border-box;
+    color:#fff;
+}
+
+@mixin  flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.today{
+    @include flex-row;
+    .item{
+        display: block;
+        flex:1;
+        padding-right: 16rpx;
+        margin: 0 16rpx 0 0 ;
+        border-right:2rpx solid rgba(255,255,255,.4)
+    }
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.hourly{
+    .scrollX{
+        position: relative;
+        width:928rpx;
+        padding:40rpx 0;
+        height:150rpx;
+    }
+    .item{
+        @include flex-column;
+        width:116rpx;
+    }
+}
+
+.life-style{
+    @include flex-row;
+    flex-wrap:wrap;
+    .item{
+        text-align:center;
+        width:25%;
+        height:188rpx;
+        border-right:2rpx solid rgba(255,255,255,.1);
+        border-bottom:2rpx solid rgba(255,255,255,.1);
+        box-sizing: border-box;
+        padding:50rpx 0 0;
+    }
+}

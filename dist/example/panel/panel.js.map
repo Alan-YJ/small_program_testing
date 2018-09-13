@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["example/panel/panel.js"],"sourcesContent":["var base64 = require(\"../images/base64\");\nPage({\n    onLoad: function(){\n        this.setData({\n            icon20: base64.icon20,\n            icon60: base64.icon60\n        });\n    }\n});"],"file":"panel.js"}

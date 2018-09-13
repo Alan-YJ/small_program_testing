@@ -1,0 +1,39 @@
+.container {
+  margin-bottom: 20rpx;
+  max-width: 750rpx;
+  box-sizing: border-box;
+  color: #fff; }
+
+.today {
+  display: flex;
+  flex-direction: row; }
+  .today .item {
+    display: block;
+    flex: 1;
+    padding-right: 16rpx;
+    margin: 0 16rpx 0 0;
+    border-right: 2rpx solid rgba(255, 255, 255, 0.4); }
+
+.hourly .scrollX {
+  position: relative;
+  width: 928rpx;
+  padding: 40rpx 0;
+  height: 150rpx; }
+
+.hourly .item {
+  display: flex;
+  flex-direction: column;
+  width: 116rpx; }
+
+.life-style {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+  .life-style .item {
+    text-align: center;
+    width: 25%;
+    height: 188rpx;
+    border-right: 2rpx solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2rpx solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    padding: 50rpx 0 0; }

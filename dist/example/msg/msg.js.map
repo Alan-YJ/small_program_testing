@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["example/msg/msg.js"],"sourcesContent":["Page({\n    openSuccess: function () {\n        wx.navigateTo({\n            url: 'msg_success'\n        })\n    },\n    openFail: function () {\n        wx.navigateTo({\n            url: 'msg_fail'\n        })\n    }\n});"],"file":"msg.js"}

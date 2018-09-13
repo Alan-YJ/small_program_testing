@@ -1,0 +1,9 @@
+.searchbar-result {
+  margin-top: 0;
+  font-size: 28rpx; }
+
+.searchbar-result:before {
+  display: none; }
+
+.weui-cell {
+  padding: 24rpx 30rpx 24rpx 70rpx; }

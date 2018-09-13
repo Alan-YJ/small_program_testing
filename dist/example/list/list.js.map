@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["example/list/list.js"],"sourcesContent":["var base64 = require(\"../images/base64\");\nPage({\n    onLoad: function(){\n        this.setData({\n            icon: base64.icon20\n        });\n    }\n});"],"file":"list.js"}

@@ -1,0 +1,7 @@
+.button-sp-area {
+  margin: 0 auto;
+  padding-top: 30rpx;
+  width: 60%; }
+
+.mini-btn {
+  margin-right: 10rpx; }

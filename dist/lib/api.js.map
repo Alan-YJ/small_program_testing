@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["lib/api.js"],"sourcesContent":["export const test = (a,b) =>{\n    return wx.cloud.callFunction({\n        name:'test',\n        data:{\n            a,b\n        }\n    })\n}"],"file":"api.js"}
