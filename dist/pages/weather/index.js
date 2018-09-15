@@ -16,7 +16,7 @@ Page({
             "windLevel":"1",
             "weather":"阴",
             "humidity":"73",
-            "icon":"yin",
+            "icon":"tianqi-yintian",
             "ts":"2018-08-12 14:54"
         },
         "today":{
@@ -67,6 +67,13 @@ Page({
                 this.setData({
                     paddingTop:res.statusBarHeight+12
                 })
+            }
+        })
+        wx.getLocation({
+            type:'gcj02',
+            success:this.updateLocation,
+            fail:(e)=>{
+                this.openLocation()
             }
         })
     }

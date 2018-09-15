@@ -16,7 +16,7 @@ Page({
             "windLevel":"1",
             "weather":"阴",
             "humidity":"73",
-            "icon":"yin",
+            "icon":"tianqi-yintian",
             "ts":"2018-08-12 14:54"
         },
         "today":{
@@ -62,11 +62,85 @@ Page({
         ]
     },
     onLoad(){
+        this.getLocation()
         wx.getSystemInfo({
             success:(res)=>{
                 this.setData({
                     paddingTop:res.statusBarHeight+12
                 })
+            }
+        })
+    },
+    getAddress(lat,lon,name){
+        wx.showLoading({
+            title:'定位中',
+            mask:true
+        })
+        let fail = (e)=>{
+            this.setData({
+                address: name||'湖北省武汉市汉阳区'
+            })
+            wx.hideLoading()
+            this.getWeatherData()
+        }
+        geocoder(lat,lon,(res)=>{ 
+            wx.hideLoading()
+            let result = (res.data||{}).result
+
+            if(res.statusCode===200&&result&&result.address){
+                let {address,formatted_addresses,address_component} = result
+                if(formatted_addresses&&(formatted_addresses.recommend||formatted_addresses.rough)){
+                    address = formatted_addresses.recommend||formatted_addresses.rough
+                }
+                let {province,city,district: county} = address_component
+                this.setData({
+                    province,county,city,address: name||address
+                })
+                this.getWeatherData()
+            }else{
+                fail()
+            }
+        },fail)
+    },
+
+    updateLocation(res){
+        let {latitude:lat,longitude:lon,name} = res
+        let data={lat,lon}
+        if(name){
+            data.address = name
+        }
+        this.setData(data)
+        this.getAddress(lat,lon,name)
+    },
+
+    getLocation(){
+        wx.getLocation({
+            type:'gcj02',
+            success:this.updateLocation,
+            fail:(e)=>{
+                this.openLocation()
+            }
+        })
+    },
+
+    openLocation(){
+        wx.showToast({
+            title: '检测到您未授权使用位置权限，请先开启哦',
+            icon: 'none',
+            duration: 3000
+        })
+    },
+
+    chooseLocation(){
+        wx.chooseLocation({
+            success:(res)=>{
+                let {latitude,longitude} = res
+                let {lat,lon} = this.data
+                if(latitude == lat&&lon == longitude){
+                    this.getWeatherData()
+                }else{
+                    this.updateLocation(res)
+                }
             }
         })
     }
